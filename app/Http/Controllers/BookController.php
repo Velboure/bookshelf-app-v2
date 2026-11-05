@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Models\Publisher;
+
 
 class BookController extends Controller
 {
@@ -18,10 +20,12 @@ class BookController extends Controller
         return view('books.show', compact('book'));
     }
 
-    public function create()
-    {
-        return view('books.create');
-    }
+public function create()
+{
+    $publishers = Publisher::all();
+
+    return view('books.create', compact('publishers'));
+}
 
 
 public function store()
@@ -31,6 +35,8 @@ public function store()
         'author' => ['required', 'string', 'max:100'],
         'cover' => ['required', 'url', 'max:2048'],
         'genre' => ['nullable', 'string', 'max:100'],
+        'publisher_id' => ['required', 'exists:publishers,id'],
+
     ]);
 
     Book::create($validated);
@@ -50,6 +56,7 @@ public function store()
             'author' => ['required', 'string', 'max:100'],
             'cover' => ['required', 'url', 'max:2048'],
             'genre' => ['nullable', 'string', 'max:100'],
+            'publisher_id' => ['required', 'exists:publishers,id'],
         ]);
 
         $book->update($validated);
@@ -58,5 +65,15 @@ public function store()
             ->route('books.edit', 'book')
             ->with('success', 'Book updated successfully!');
     }
+
+    public function destroy(Book $book)
+    {
+        $book->delete();
+
+        return redirect()
+            ->route('books.index')
+            ->with('success', 'Book deleted successfully!');
+    }
+
 
 }

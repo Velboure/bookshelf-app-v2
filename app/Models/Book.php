@@ -15,5 +15,8 @@ protected $fillable = [
     'cover',
     'genre',
 ];
-
+public function publisher()
+{
+    return $this->belongsTo(Publisher::class);
+}
 }

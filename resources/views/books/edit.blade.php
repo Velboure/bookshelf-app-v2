@@ -4,7 +4,7 @@
 
     <h1>Edit New Book</h1>
 
-    <form action="{{ route('books.update', $book->id) }}" method="POST">
+    <form action="{{ route('books.update', $book) }}" method="POST">
         @csrf
         @method('PUT')
 
@@ -31,6 +31,7 @@
         @error('genre')
             <p class="error">{{ $message }}</p>
         @enderror
+        
 
         <button type="submit">Update Book</button>
     </form>
