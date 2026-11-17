@@ -4,7 +4,7 @@
 
     <h1>Add New Book</h1>
 
-    <form action="{{ route('books.store') }}" method="POST">
+    <form action="{{ route('books.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
         <label>Book Title</label>
@@ -19,8 +19,9 @@
             <p class="error">{{ $message }}</p>
         @enderror
 
-        <label>Cover URL</label>
-        <input type="url" name="cover" value="{{ old('cover') }}"><br>
+        <label>Book Cover</label>
+        <input type="file" name="cover" accept="image/jpeg, image/png, image/gif, image/webp"><br>
+        
         @error('cover')
             <p class="error">{{ $message }}</p>
         @enderror

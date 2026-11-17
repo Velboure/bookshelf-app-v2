@@ -32,6 +32,15 @@
             <p class="error">{{ $message }}</p>
         @enderror
         
+        <label for="publisher">Publisher</label>
+        <select name="publisher_id" id="publisher">
+            <option value="">Select a Publisher</option>
+            @foreach ($publishers as $publisher)
+                <option value="{{ $publisher->id }}" {{ old('publisher_id', $book->publisher_id) == $publisher->id ? 'selected' : '' }}>
+                    {{ $publisher->name }}
+                </option>
+            @endforeach
+        </select>
 
         <button type="submit">Update Book</button>
     </form>
